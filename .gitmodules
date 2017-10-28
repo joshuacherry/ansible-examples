@@ -1,0 +1,12 @@
+[submodule "roles/prometheus"]
+	path = roles/prometheus
+	url = git@github.com:joshuacherry/ansible-role-prometheus.git
+[submodule "roles/alertmanager"]
+	path = roles/alertmanager
+	url = git@github.com:joshuacherry/ansible-role-alertmanager.git
+[submodule "roles/grafana"]
+	path = roles/grafana
+	url = git@github.com:joshuacherry/ansible-role-grafana.git
+[submodule "roles/mysql"]
+	path = roles/mysql
+	url = git@github.com:joshuacherry/ansible-role-mysql.git

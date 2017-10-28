@@ -1,0 +1,23 @@
+---
+- name: Prometheus Stack
+  hosts: prometheus
+  become: yes
+  become_method: sudo
+  remote_user: "{{ playbook_remote_user }}"
+  
+  tasks:
+    - name: Override variables for MySQL (Debian).
+      set_fact:
+        mysql_packages:
+          - mariadb-client
+          - mariadb-server
+          - python-mysqldb
+      when: ansible_os_family == "Debian"
+    - include_role:
+        name: mysql
+    - include_role:
+        name: grafana
+    - include_role:
+        name: prometheus
+    - include_role:
+        name: alertmanager

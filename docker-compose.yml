@@ -1,0 +1,56 @@
+version: '2'
+services:
+  centos7:
+    build: docker/centos7/
+    privileged: true
+    cap_add:
+      - ALL
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /lib/modules:/lib/modules:ro
+    entrypoint: /usr/lib/systemd/systemd
+    extra_hosts:
+      - "es1:127.0.0.1"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "9090:9090"
+      - "9093:9093"
+      - "9100:9100"
+      - "3000:3000"
+  jessie64:
+    build: docker/jessie64/
+    privileged: true
+    cap_add:
+      - ALL
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /lib/modules:/lib/modules:ro
+    entrypoint: /lib/systemd/systemd
+    extra_hosts:
+      - "es1:127.0.0.1"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "9090:9090"
+      - "9093:9093"
+      - "9100:9100"
+      - "3000:3000"
+  xenial64:
+    build: docker/xenial64/
+    privileged: true
+    cap_add:
+      - ALL
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /lib/modules:/lib/modules:ro
+    entrypoint: /lib/systemd/systemd
+    extra_hosts:
+      - "es1:127.0.0.1"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "9090:9090"
+      - "9093:9093"
+      - "9100:9100"
+      - "3000:3000"

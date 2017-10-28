@@ -1,0 +1,110 @@
+# Hosts in the 'prometheus' group get these variables
+# environments/dev/hosts
+# For dev, docker will use scripts/ci.sh to write 'localhost'
+#   into the appropriate group
+
+---
+# Prometheus Variables
+prometheus_version: 1.8.0
+prometheus_checksum: 5028defde39c4b9975b6174a2dbf29983cbae9f18e9d8313d9187d4b1078da27
+prometheus_force_reinstall: false
+
+prometheus_port: 9090
+prometheus_alertmanager_host: localhost
+prometheus_alertmanager_port: 9093
+
+# Alertmanager Variables
+alertmanager_version: 0.9.1
+alertmanager_checksum: 407e0311689207b385fb1252f36d3c3119ae9a315e3eba205aaa69d576434ed7
+alertmanager_force_reinstall: false
+
+alertmanager_port: 9093
+
+# MySQL
+## Since this file is tested against multiple OSs, I've put the variable `mysql_packages`
+## in the playbook file as a fact with a conditional for Debian systems.
+mysql_root_password: "{{ vault_mysql_root_password }}"
+
+mysql_databases:
+  - name: "{{ vault_grafana_db_name }}"
+    encoding: utf8
+    collation: utf8_bin
+mysql_users:
+  - name: "{{ vault_grafana_db_user }}"
+    host: "%"
+    password: "{{ vault_grafana_db_pass }}"
+    priv: "{{ vault_grafana_db_name }}.*:ALL"
+
+mysql_innodb_buffer_pool_size: "256M"
+mysql_innodb_log_file_size: "64M"
+
+# Grafana
+grafana_version: 4.6.0
+
+grafana_plugins:
+  - grafana-clock-panel
+  - grafana-piechart-panel
+  - michaeldmoore-annunciator-panel
+  - jdbranham-diagram-panel
+
+grafana_ini_server: |
+  protocol = http
+  http_port = 3000
+  domain = localhost
+  enforce_domain = false
+  root_url = https://localhost:3000
+
+grafana_ini_database: |
+  type = mysql
+  name = {{ vault_grafana_db_name }}
+  host = 127.0.0.1:3306
+  user = {{ vault_grafana_db_user }}
+  password = {{ vault_grafana_db_pass }}
+grafana_ini_security: |
+  admin_user = {{ vault_grafana_admin_user }}
+  admin_password = {{ vault_grafana_admin_pass }}
+  secret_key = {{ vault_grafana_secret_key }}
+
+grafana_ini_users: |
+  allow_sign_up = false
+  allow_org_create = false
+  auto_assign_org = true
+  auto_assign_org_role = Viewer
+  login_hint = email or username
+  default_theme = dark
+
+grafana_ini_auth_ldap: |
+  enabled = false
+  config_file = /etc/grafana/ldap.toml
+  allow_sign_up = true
+
+grafana_ldap_servers: |
+  host = "127.0.0.1"
+  port = 389
+  use_ssl = false
+  ssl_skip_verify = false
+  search_base_dns = ["dc=grafana,dc=org"]
+  bind_dn = "{{ vault_grafana_ldap_bind_dn }}"
+  bind_password = '{{ vault_grafana_ldap_bind_password }}'
+  search_filter = "(cn=%s)"
+
+grafana_ldap_servers_attributes: |
+  name = "sAMAccountName"
+  surname = "sn"
+  username = "cn"
+  member_of = "memberOf"
+  email =  "email"
+
+grafana_ldap_group_mapping:
+  - { group_dn: "cn=admins,dc=grafana,dc=org",
+      org_role: "Admin",
+      org_id: 1
+    }
+  - { group_dn: "cn=users,dc=grafana,dc=org",
+      org_role: "Editor",
+      org_id: 1
+    }
+  - { group_dn: "*",
+      org_role: "Viewer",
+      org_id: 1
+    }

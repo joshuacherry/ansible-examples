@@ -1,0 +1,13 @@
+---
+- name: Example Playbook for 'all' hosts
+  hosts: local
+  become: yes
+  become_method: sudo
+  gather_facts: yes
+  remote_user: "{{ playbook_remote_user }}"
+
+  tasks:
+    - name: print value of playbook_remote_user variable
+      debug:
+        msg: "playbook_remote_user: {{ playbook_remote_user }}"
+      changed_when: false

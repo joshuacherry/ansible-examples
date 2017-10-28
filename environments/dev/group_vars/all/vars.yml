@@ -1,0 +1,8 @@
+# All Playbooks gets these variables
+# Variable Precedence can get complicated
+# See http://docs.ansible.com/ansible/latest/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable
+---
+playbook_remote_user: vagrant
+# ntp_servers:
+# dns_servers:
+# etc.

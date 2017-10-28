@@ -1,0 +1,9 @@
+# Do not pre-populate these groups if you are using docker for tests.
+
+[local]
+
+[prometheus]
+
+[development:children]
+local
+prometheus
