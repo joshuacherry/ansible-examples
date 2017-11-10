@@ -9,14 +9,19 @@ env:
     - DOCKER_VERSION=17.03.1~ce-0~ubuntu-trusty
     - DOCKER_COMPOSE_VERSION=1.13.0
   matrix:
-    - OS=jessie64 PLAYBOOK=example
-    - OS=xenial64 PLAYBOOK=example
-    - OS=centos7  PLAYBOOK=example
     - OS=jessie64 PLAYBOOK=prometheus
     - OS=xenial64 PLAYBOOK=prometheus
     - OS=centos7  PLAYBOOK=prometheus
 
+# disable the default submodule logic
+git:
+  submodules: false
+
 before_install:
+  # use sed to replace the SSH URL with the public URL, then init and update submodules
+  # Then setup scripts for docker install
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - git submodule update --init --recursive
   - chmod +x ./scripts/install-docker.sh
   - chmod +x ./scripts/ci.sh
   - sudo -E ./scripts/install-docker.sh
