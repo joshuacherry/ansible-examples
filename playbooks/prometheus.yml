@@ -21,3 +21,9 @@
         name: prometheus
     - include_role:
         name: alertmanager
+    - include_role:
+        name: dhparams
+    - include_role:
+        name: openssl
+    - include_role:
+        name: apache

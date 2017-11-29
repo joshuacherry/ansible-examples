@@ -120,6 +120,47 @@ control '04' do
 
   describe file('/var/lib/grafana/plugins/grafana-clock-panel') do
     it { should exist }
-   end
+  end
 
 end
+
+control '04' do
+  impact 1.0
+  title 'Verify Apache, dhparams, and openssl'
+  desc 'Ensures apache service is up and running'
+
+  describe file('/etc/pki/tls/certs/dhparams.pem') do
+    it { should exist }
+  end
+
+  describe package('openssl') do
+    it { should be_installed }
+  end
+
+  describe file('/etc/pki/tls/certs') do
+    its('type') { should eq :directory }
+    it { should be_directory }
+  end
+
+  describe file('/etc/pki/tls/private') do
+    its('type') { should eq :directory }
+    it { should be_directory }
+  end
+
+  describe port(80) do
+    it { should be_listening }
+  end
+  describe http('http://localhost:80') do
+    its('status') { should cmp 301 }
+  end
+
+  describe port(443) do
+    it { should be_listening }
+  end
+  describe http('https://localhost/login', ssl_verify: false) do
+    its('status') { should cmp 200 }
+  end
+
+
+end
+

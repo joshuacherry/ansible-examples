@@ -10,3 +10,12 @@
 [submodule "roles/mysql"]
 	path = roles/mysql
 	url = git@github.com:joshuacherry/ansible-role-mysql.git
+[submodule "roles/apache"]
+	path = roles/apache
+	url = git@github.com:joshuacherry/ansible-role-apache.git
+[submodule "roles/dhparams"]
+	path = roles/dhparams
+	url = git@github.com:joshuacherry/ansible-role-dhparams.git
+[submodule "roles/openssl"]
+	path = roles/openssl
+	url = git@github.com:joshuacherry/ansible-role-openssl.git

@@ -16,11 +16,28 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.3.0] - 2017-11-29
+
+### Added
+
+- [apache](https://github.com/joshuacherry/ansible-role-apache) role added to prometheus
+- [dhparams](https://github.com/joshuacherry/ansible-role-dhparams) role added to prometheus
+- [openssl](https://github.com/joshuacherry/ansible-role-openssl) role added to prometheus
+
+### Changed
+
+- Default playbook in `Makefile` changed to prometheus
+
+### Fixed
+
+- Explicitly set mount_options for Vagrant folder to fix script file permissions on Mac.
+
 ## [0.2.0] - 2017-11-10
 
 ### Fixed
 
 - Updated .travis.yml to not use publickeys for submodule downloads
 
-[Unreleased]: https://github.com/joshuacherry/ansible-examples/compare/0.2.0...HEAD
+[Unreleased]: https://github.com/joshuacherry/ansible-examples/compare/0.3.0...HEAD
+[0.3.0]: https://github.com/joshuacherry/ansible-examples/compare/0.2.0...0.3.0
 [0.2.0]: https://github.com/joshuacherry/ansible-examples/compare/0.1.0...0.2.0

@@ -1,6 +1,6 @@
 BOXES := $(notdir $(wildcard docker/*))
 
-PLAYBOOK        ?= example
+PLAYBOOK        ?= prometheus
 
 define USAGE
 targets:
